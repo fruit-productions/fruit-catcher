@@ -5,14 +5,14 @@ import pygame
 pygame.init()
 
 window = pygame.display.set_mode((500, 800))
-pygame.display.set_caption("Blob Game")
+pygame.display.set_caption("Fruit Catcher")
 
-#fruits = [LIST OF IMAGES OF FRUITS, pygame.image.load('__.jpg')]
+fruits = [pygame.image.load('strawberry.png')]
 #bomb = pygame.image.load('__.jpg')
 #bg = pygame.image.load('__.jpg')
-#char = pygame.image.load('___.jpg')
+basket_img = pygame.image.load('basket.png')
 
-class Player(object):
+class Basket(object):
     def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
@@ -27,20 +27,19 @@ class Fruit(object):
         self.vel = 10
     def appear(self, x, y):
         # draw fruit at coordinates (x,y)
-        while self.y < 800 + blob.height:
+        while self.y < 800 + basket.height:
             self.y += self.vel
 
-blob = Player(250, 750)
+basket = Basket(250, 750, 30, 30)
 play = True
 while play:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             play = False
-            
+
     keys = pygame.key.get_pressed()
-    
-    if keys[pygame.K_LEFT] and blob.x > blob.vel:
-        x -= vel
-    if keys[pygame.K_RIGHT] and blob.x < 500 - blob.width - blob.vel:
-        x += vel
-    
+
+    if keys[pygame.K_LEFT] and basket.x > basket.vel:
+        basket.x -= basket.vel
+    if keys[pygame.K_RIGHT] and basket.x < 500 - basket.width - basket.vel:
+        basket.x += basket.vel
