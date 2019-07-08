@@ -32,7 +32,7 @@ class Fruit(object):
 
 def draw(self):
     self.hitbox = (self.x + 20, self.y, 28, 60)
-    pygame.draw.rect
+    #pygame.draw.rect(win, 
 
 basket = Basket(250, 750, 30, 30)
 play = True
