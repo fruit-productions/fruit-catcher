@@ -30,6 +30,10 @@ class Fruit(object):
         while self.y < 800 + basket.height:
             self.y += self.vel
 
+def draw(self):
+    self.hitbox = (self.x + 20, self.y, 28, 60)
+    pygame.draw.rect
+
 basket = Basket(250, 750, 30, 30)
 play = True
 while play:
