@@ -12,6 +12,7 @@ fruits = [pygame.image.load('strawberry.png')]
 #bg = pygame.image.load('__.jpg')
 basket_img = pygame.image.load('basket.png')
 
+score = 0
 class Basket(object):
     def __init__(self, x, y, width, height):
         self.x = x
@@ -33,6 +34,7 @@ class Fruit(object):
             self.y += self.vel
     def hit(self):
         print("You caught a fruit!")
+        score += 10 #temp value
         #function for making the fruit disappear once caught
         pass
 
