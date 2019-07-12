@@ -9,7 +9,7 @@ pygame.display.set_caption("Fruit Catcher")
 
 fruits = [pygame.image.load('strawberry.png')]
 bomb = pygame.image.load('bomb.png')
-#bg = pygame.image.load('__.jpg')
+bg = pygame.image.load('background.jpg')
 basket_img = pygame.image.load('basket.png')
 
 class Basket(object):
