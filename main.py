@@ -34,7 +34,6 @@ class Fruit(object):
         while self.y < 800 + basket.height:
             self.y += self.vel
 
-
 def redrawGameWindow():
     #win.blit(bg, (0,0))
     if (fruit_count < max_fruit):
