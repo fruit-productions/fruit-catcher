@@ -10,28 +10,27 @@ window = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption("Fruit Catcher")
 
 basket_img = pygame.image.load('basket.png')
+basket_img = pygame.transform.scale(basket_img, (150, 100))
 bg = pygame.image.load('background.jpg')
 fruits_img = [pygame.image.load('strawberry.png')]
+fruits_img[0] = pygame.transform.scale(fruits_img[0], (100, 100))
 bomb_img = pygame.image.load('bomb.png')
+bomb_img = pygame.transform.scale(bomb_img, (100, 100))
 
 clock = pygame.time.Clock()
 
 class Basket(object):
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
         self.vel = 10
     def draw(self, window):
         window.blit(basket_img, (self.x, self.y))
 
 class Fruits(object):
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
         self.vel = 1
     def draw(self, window):
         while self.y < 800:
@@ -42,12 +41,11 @@ def redrawGameWindow():
     window.blit(bg, (0,0))
     basket.draw(window)
     strawberry.draw(window)
-    
     pygame.display.update()
 
 #mainloop
-basket = Basket(display_width * 0.2, display_height * 0.7, 300, 30)
-strawberry = Fruits(display_width * 0.4, display_height * 0.1, 50, 50)
+basket = Basket(display_width * 0.35, display_height - 160)
+strawberry = Fruits(display_width * 0.4, display_height * 0.1)
 #pygame.time.set_timer(pygame.USEREVENT+1, 600) AFK option?
 play = True
 while play:
@@ -65,4 +63,3 @@ while play:
     
     redrawGameWindow()
 pygame.quit()
-
