@@ -1,5 +1,5 @@
-#import os
-#os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
 import pygame
 pygame.init()
@@ -36,10 +36,8 @@ class Fruits(object):
     def draw(self, window):
         while self.y < 800:
             self.y += self.vel
-NEWSTART
             window.blit(fruits_img[0], (self.x, self.y))
-
-master
+            
 def redrawGameWindow():
     window.blit(bg, (0,0))
     basket.draw(window)
