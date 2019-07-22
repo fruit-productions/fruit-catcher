@@ -41,11 +41,6 @@ class Fruits(object):
         # add more fruits later
     def collision():
         pass
-            
-def redrawGameWindow():
-    window.blit(bg, (0,0))
-    basket.draw(window)
-    pygame.display.update()
 
 def main():
     basket = Basket(display_width * 0.35, display_height - 160)
