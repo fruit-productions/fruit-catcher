@@ -45,32 +45,41 @@ class Fruits(object):
         window.blit(fruit, (self.x, self.y))
         self.hitbox = (self.x, self.y, 100, 100)
         pygame.draw.rect(window, (255, 0, 0), self.hitbox, 2)
-    def collision():
-        pass
 
 def main():
+    score = 0
+    fruits = []
+    fruit_add_counter = 0
+    add_fruit_rate = 20
     basket = Basket(display_width * 0.35, display_height - 160)
-    f_type = 0
-    f_startx = random.randrange(100, display_width - 100)
-    f_starty = 0
     play = True
     while play:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                play = False
+                play = False      
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and basket.x > basket.vel - 5:
             basket.x -= basket.vel
         elif keys[pygame.K_RIGHT] and basket.x < 500 - 150 - basket.vel:
-            basket.x += basket.vel
+            basket.x += basket.vel  
         window.blit(bg, (0,0))
-        fruit = Fruits(f_startx, f_starty, f_type)
-        fruit.draw(window)
-        f_starty += fruit.vel
-        if f_starty > display_height:
+        fruit_add_counter += 1
+        if fruit_add_counter == add_fruit_rate:
+            fruit_add_counter = 0
             f_startx = random.randrange(100, display_width - 100)
             f_starty = 0
-            fruit = Fruits(f_startx, f_starty, f_type)
+            f_type = 0 # change to random later
+            new_fruit = Fruits(f_startx, f_starty, f_type)
+            fruits.append(new_fruit)
+        for item in fruits:
+            item.draw(window)
+            item.y += item.vel
+        for item in fruits[:]:
+            if (item.hitbox[0] >= basket.hitbox[0] - 20) and (item.hitbox[0] <= basket.hitbox[0] + 70):
+                if basket.hitbox[1] - 120 <= item.hitbox[1] <= basket.hitbox[1] - 40:
+                    fruits.remove(item)
+                    score += 1
+                    print("Score:", score)
         basket.draw(window)
         pygame.display.update()
         clock.tick(60)
