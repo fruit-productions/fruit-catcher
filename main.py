@@ -12,6 +12,13 @@ display_height = 800
 window = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption("Basket Game")
 
+black = (0, 0, 0)
+white = (255, 255, 255)
+dark_red = (200, 0, 0)
+dark_green = (0, 200, 0)
+bright_red = (255, 0, 0)
+bright_green = (0, 255, 0)
+
 basket_img = pygame.image.load('basket.png')
 basket_img = pygame.transform.scale(basket_img, (150, 100))
 bg = pygame.image.load('background.jpg')
@@ -45,7 +52,48 @@ class Fruits(object):
         window.blit(fruit, (self.x, self.y))
         self.hitbox = (self.x, self.y, 100, 100)
         pygame.draw.rect(window, (255, 0, 0), self.hitbox, 2)
+        
+def text_objects(text, font):
+    textSurface = font.render(text, True, black)
+    return textSurface, textSurface.get_rect()
 
+def button(msg, x, y, width, height, inactive_color, active_color, action = None):
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+
+    if (x+width > mouse[0] > x and y+height > mouse[1] > y):
+        pygame.draw.rect(window, active_color, (x, y, width, height))
+        if (click[0] == 1 and action != None):
+            if (action == "play"):
+                main()
+            elif (action == "quit"):
+                pygame.quit()
+                quit()
+    else:
+        pygame.draw.rect(window, inactive_color, (x, y, width, height))
+    smallText = pygame.font.Font("freesansbold.ttf", 20)
+    textSurf, textRect = text_objects(msg, smallText)
+    textRect.center = ((x+(width/2)), (y+(height/2)))
+    window.blit(textSurf, textRect)
+    
+def game_intro():
+    intro = True
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        window.fill(white)
+        largeText = pygame.font.Font("freesansbold.ttf", 50)
+        TextSurf, TextRect = text_objects("Welcome to Basket", largeText)
+        TextRect.center = ((display_width/2), (display_height/2))
+        window.blit(TextSurf, TextRect)
+        button("Start", 100, 450, 100, 50, dark_green, bright_green, "play")
+        button("Quit", 300, 450, 100, 50, dark_red, bright_red, "quit")
+        
+        pygame.display.update()
+        clock.tick(15)
+    
 def main():
     score = 0
     fruits = []
@@ -85,4 +133,5 @@ def main():
         clock.tick(60)
     pygame.quit()
 
+game_intro()
 main()
