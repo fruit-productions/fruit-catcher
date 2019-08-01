@@ -85,7 +85,7 @@ def game_intro():
                 quit()
         window.blit(bg, (0,0))
         largeText = pygame.font.Font("freesansbold.ttf", 50)
-        TextSurf, TextRect = text_objects("Welcome to Basket", largeText)
+        TextSurf, TextRect = text_objects("FRUIT CATCHER", largeText)
         TextRect.center = ((display_width/2), (display_height/2))
         window.blit(TextSurf, TextRect)
         button("Start", 100, 450, 100, 50, dark_green, bright_green, "play")
