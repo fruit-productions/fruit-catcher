@@ -83,7 +83,7 @@ def game_intro():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-        window.fill(white)
+        window.blit(bg, (0,0))
         largeText = pygame.font.Font("freesansbold.ttf", 50)
         TextSurf, TextRect = text_objects("Welcome to Basket", largeText)
         TextRect.center = ((display_width/2), (display_height/2))
