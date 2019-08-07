@@ -7,7 +7,6 @@ import random
 
 pygame.init()
 
-
 #COLORS
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -111,7 +110,6 @@ def help_page():
         message_to_screen("Each fruit is worth a different amount of points:", 250, 390, 20)
         message_to_screen("STRAWBERRIES: 1pnt", 250, 420, 20)
         button("Back", 100, 600, 75, 50, dark_blue, bright_blue, "back")
-        
         pygame.display.update()
         clock.tick(15)
         
@@ -174,7 +172,7 @@ def main():
                     fruits.remove(item)
                     score += 1
                     if item.f_type == 0: # add more options later
-                        score += 1
+                        score += 0 # change later once we have more options
                     print("Score:", score)
         for item in bombs:
             item.draw(window)
