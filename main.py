@@ -7,18 +7,24 @@ import random
 
 pygame.init()
 
+
+#COLORS
+black = (0, 0, 0)
+white = (255, 255, 255)
+dark_blue = (0, 0, 200)
+dark_red = (200, 0, 0)
+dark_green = (0, 200, 0)
+bright_red = (255, 0, 0)
+bright_green = (0, 255, 0)
+bright_blue = (0, 0, 255)
+
+#DISPLAY
 display_width = 500
 display_height = 800
 window = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption("Fruit Catcher")
 
-black = (0, 0, 0)
-white = (255, 255, 255)
-dark_red = (200, 0, 0)
-dark_green = (0, 200, 0)
-bright_red = (255, 0, 0)
-bright_green = (0, 255, 0)
-
+#IMAGES
 basket_img = pygame.image.load('basket.png')
 basket_img = pygame.transform.scale(basket_img, (150, 100))
 bg = pygame.image.load('background.jpg')
@@ -60,10 +66,16 @@ class Bombs(object):
     def draw(self, window):
         window.blit(bomb_img, (self.x, self.y))
         self.hitbox = (self.x, self.y, 100, 100)
-        
+
 def text_objects(text, font):
     textSurface = font.render(text, True, black)
     return textSurface, textSurface.get_rect()
+
+def message_to_screen(msg, x, y, size):
+    regText = pygame.font.Font("freesansbold.ttf", size)
+    textSurf, textRect = text_objects(msg, regText)
+    textRect.center = (x, y)
+    window.blit(textSurf, textRect)
 
 def button(msg, x, y, width, height, inactive_color, active_color, action = None):
     mouse = pygame.mouse.get_pos()
@@ -76,13 +88,33 @@ def button(msg, x, y, width, height, inactive_color, active_color, action = None
             elif (action == "quit"):
                 pygame.quit()
                 quit()
+            elif (action == "instructions"):
+                help_page()
+            elif (action == "back"):
+                game_intro()
     else:
         pygame.draw.rect(window, inactive_color, (x, y, width, height))
-    smallText = pygame.font.Font("freesansbold.ttf", 20)
-    textSurf, textRect = text_objects(msg, smallText)
-    textRect.center = ((x+(width/2)), (y+(height/2)))
-    window.blit(textSurf, textRect)
-    
+    message_to_screen(msg, (x + (width/2)), (y + (height/2)), 20)
+
+def help_page():
+    intro = True
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        window.fill(white) #help page background here
+        message_to_screen("HOW TO PLAY", 250, 200, 50)
+        message_to_screen("Use left and right arrow keys to move the basket.", 250, 270, 20)
+        message_to_screen("Catch as many fruits as you can,", 250, 300, 20)
+        message_to_screen("but avoid the bombs!", 250, 330, 20)
+        message_to_screen("Each fruit is worth a different amount of points:", 250, 390, 20)
+        message_to_screen("STRAWBERRIES: 1pnt", 250, 420, 20)
+        button("Back", 100, 600, 75, 50, dark_blue, bright_blue, "back")
+        
+        pygame.display.update()
+        clock.tick(15)
+        
 def game_intro():
     intro = True
     while intro:
@@ -91,12 +123,10 @@ def game_intro():
                 pygame.quit()
                 quit()
         window.blit(bg, (0,0))
-        largeText = pygame.font.Font("freesansbold.ttf", 50)
-        TextSurf, TextRect = text_objects("FRUIT CATCHER", largeText)
-        TextRect.center = ((display_width/2), (display_height/2))
-        window.blit(TextSurf, TextRect)
-        button("Start", 100, 450, 100, 50, dark_green, bright_green, "play")
-        button("Quit", 300, 450, 100, 50, dark_red, bright_red, "quit")
+        message_to_screen("FRUIT CATCHER", display_width/2, display_height/2, 50)
+        button("Start", 100, 450, 75, 50, dark_green, bright_green, "play")
+        button("Quit", 300, 450, 75, 50, dark_red, bright_red, "quit")
+        button("Help", 200, 450, 75, 50, dark_blue, bright_blue, "instructions")
         pygame.display.update()
         clock.tick(15)
     
@@ -142,6 +172,7 @@ def main():
             if (item.hitbox[0] >= basket.hitbox[0] - 20) and (item.hitbox[0] <= basket.hitbox[0] + 70):
                 if basket.hitbox[1] - 120 <= item.hitbox[1] <= basket.hitbox[1] - 40:
                     fruits.remove(item)
+                    score += 1
                     if item.f_type == 0: # add more options later
                         score += 1
                     print("Score:", score)
@@ -152,11 +183,7 @@ def main():
             if (item.hitbox[0] >= basket.hitbox[0]) and (item.hitbox[0] <= basket.hitbox[0] + 50):
                 if basket.hitbox[1] - 120 <= item.hitbox[1] <= basket.hitbox[1] - 40:
                     play = False
-                    score += 1
-        smallText = pygame.font.Font("freesansbold.ttf", 20)
-        TextSurf, TextRect = text_objects(("Score: "+str(score)), smallText)
-        TextRect.center = (50, 30)
-        window.blit(TextSurf, TextRect)
+        message_to_screen("Score: "+str(score), 50, 30, 20)
         basket.draw(window)
         pygame.display.update()
         clock.tick(60)
