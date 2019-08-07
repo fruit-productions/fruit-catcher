@@ -152,6 +152,11 @@ def main():
             if (item.hitbox[0] >= basket.hitbox[0]) and (item.hitbox[0] <= basket.hitbox[0] + 50):
                 if basket.hitbox[1] - 120 <= item.hitbox[1] <= basket.hitbox[1] - 40:
                     play = False
+                    score += 1
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        TextSurf, TextRect = text_objects(("Score: "+str(score)), smallText)
+        TextRect.center = (50, 30)
+        window.blit(TextSurf, TextRect)
         basket.draw(window)
         pygame.display.update()
         clock.tick(60)
